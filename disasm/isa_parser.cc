@@ -237,6 +237,8 @@ isa_parser_t::isa_parser_t(const char* str, const char *priv)
       extension_table[EXT_ZICOND] = true;
     } else if (ext_str == "zihpm") {
       extension_table[EXT_ZIHPM] = true;
+    } else if (ext_str == "zilsd") {
+      extension_table[EXT_ZILSD] = true;
     } else if (ext_str == "zvbb") {
       extension_table[EXT_ZVBB] = true;
     } else if (ext_str == "zvbc") {

@@ -41,6 +41,12 @@
     DO_WRITE_FREG(reg, wdata); \
   })
 #define WRITE_VSTATUS STATE.log_reg_write[3] = {0, 0};
+#define WRITE_REG_PAIR(reg, value) \
+  if (reg != 0) { \
+    require(reg % 2 == 0); \
+    WRITE_REG(reg, sext32(value)); \
+    WRITE_REG(reg + 1, (sreg_t(value)) >> 32); \
+  }
 
 // RVC macros
 #define WRITE_RVC_RS1S(value) WRITE_REG(insn.rvc_rs1s(), value)
@@ -59,6 +65,14 @@
 #define RVC_R2S (Sn(insn.rvc_r2sc()))
 #define SP READ_REG(X_SP)
 #define RA READ_REG(X_RA)
+
+// Zilsd macros
+#define WRITE_RD_D(value) (xlen == 32 ? WRITE_RD_PAIR(value) : WRITE_RD( value))
+#define STORE_D (xlen == 32 ? MMU.store<uint64_t>(RS1 + insn.s_imm(), RS2_PAIR) : MMU.store<uint64_t>(RS1 + insn.s_imm(), RS2))
+#define WRITE_RD_PAIR(value) WRITE_REG_PAIR(insn.rd(), value)
+#define WRITE_RVC_RS2S_PAIR(value) WRITE_REG_PAIR(insn.rvc_rs2s(), value)
+#define RVC_RS2S_PAIR READ_REG_PAIR(insn.rvc_rs2s())
+#define RVC_RS2_PAIR READ_REG_PAIR(insn.rvc_rs2())
 
 // FPU macros
 #define READ_ZDINX_REG(reg) (xlen == 32 ? f64(READ_REG_PAIR(reg)) : f64(STATE.XPR[reg] & (uint64_t)-1))

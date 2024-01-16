@@ -31,13 +31,6 @@
 #define WRITE_PD() \
   rd_tmp = set_field(rd_tmp, make_mask64((i * sizeof(pd) * 8), sizeof(pd) * 8), pd);
 
-#define WRITE_RD_PAIR(value) \
-  if (insn.rd() != 0) { \
-    require(insn.rd() % 2 == 0); \
-    WRITE_REG(insn.rd(), sext32(value)); \
-    WRITE_REG(insn.rd() + 1, (sreg_t(value)) >> 32); \
-  }
-
 #define P_SET_OV(ov) \
   if (ov) P.VU.vxsat->write(1);
 
