@@ -41,11 +41,14 @@
     DO_WRITE_FREG(reg, wdata); \
   })
 #define WRITE_VSTATUS STATE.log_reg_write[3] = {0, 0};
+
+/* the value parameter needs to be evaluated before writing to the registers */
 #define WRITE_REG_PAIR(reg, value) \
   if (reg != 0) { \
     require(reg % 2 == 0); \
-    WRITE_REG(reg, sext32(value)); \
-    WRITE_REG(reg + 1, (sreg_t(value)) >> 32); \
+    uint64_t val = value; \
+    WRITE_REG(reg, sext32(val)); \
+    WRITE_REG(reg + 1, (sreg_t(val)) >> 32); \
   }
 
 // RVC macros
