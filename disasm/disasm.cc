@@ -1384,7 +1384,7 @@ void disassembler_t::add_instructions(const isa_parser_t* isa)
     DISASM_INSN("c.fsw", c_fsw, 0, {&rvc_fp_rs2s, &rvc_lw_address});
     DISASM_INSN("c.fswsp", c_fswsp, 0, {&rvc_fp_rs2, &rvc_swsp_address});
   }
-  else if (isa->extension_enabled(EXT_ZILSD)) {
+  else if (isa->extension_enabled(EXT_ZCMLSD)) {
       DISASM_INSN("c.ld", c_ld, 0, {&rvc_rs2s, &rvc_ld_address});
       DISASM_INSN("c.ldsp", c_ldsp, 0, {&xrd, &rvc_ldsp_address});
       DISASM_INSN("c.sd", c_sd, 0, {&rvc_rs2s, &rvc_ld_address});
